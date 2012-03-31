@@ -1,5 +1,5 @@
 " Vim syntax file
-" Language:	Velocity templates
+" Language:  Velocity templates
 " Maintainer:	Antonio Terceiro <terceiro@im.ufba.br>
 " Last Change:	2003 Jan 22
 
@@ -17,40 +17,38 @@ else
   runtime! syntax/html.vim
 endif
 
-syn keyword	velocityTodo	contained TODO FIXME XXX
+syn keyword velocityTodo contained TODO FIXME XXX
 
 " redefine HTML Strings so they contain velocity stuff:
-syn region  htmlString   contained start=+"+ end=+"+ contains=htmlSpecialChar,javaScriptExpression,@htmlPreproc,velocityReference,velocityFormalReference
-syn region  htmlString   contained start=+'+ end=+'+ contains=htmlSpecialChar,javaScriptExpression,@htmlPreproc,velocityReference,velocityFormalReference
+syn region htmlString contained start=+"+ end=+"+ contains=htmlSpecialChar,javaScriptExpression,@htmlPreproc,velocityReference,velocitySilentReference,velocityFormalReference,velocitySilentFormalReference
+syn region htmlString contained start=+'+ end=+'+ contains=htmlSpecialChar,javaScriptExpression,@htmlPreproc,velocityReference,velocitySilentReference,velocityFormalReference,velocitySilentFormalReference
 
-" the both reference types support the silent mode: $!variableName
 
 syn match velocityIdentifier "[a-zA-Z][a-zA-Z_\-0-9]*" contained
 
+" the both reference types support the silent mode: $!variableName
 " changed on suggestion from Philippe Paravicini <philippe.paravicini@datalex.com>
-" syn region velocityReference         start=/\$/    skip=/(\s*\|\s*,\s*\|\s*)/   end=/\s\|$/  contains=velocityIdentifier,velocityString,velocityNumber
-syn region velocityReference         start=/\$/    skip=/([^)])/                end=/\s\|$/  contains=velocityIdentifier,velocityString,velocityNumber
-
-syn region velocitySilentReference   start=/\$\!/  skip=/(\s*\|\s*,\s*\|\s*)/   end=/\s\|$/   contains=velocityIdentifier,velocityString,velocityNumber
-
-syn region velocityFormalReference   start=/\${/      end=/}/          contains=velocityIdentifier,velocityString,velocityNumber
-syn region velocitySilentFormalReference   start=/\$\!{/      end=/}/  contains=velocityIdentifier,velocityString,velocityNumber
+" syn region velocityReference               start=/\$/     skip=/(\s*\|\s*,\s*\|\s*)/   end=/\s\|$/   contains=velocityIdentifier,velocityString,velocityNumber
+syn region velocityReference               start=/\$/     skip=/([^)])/                end=/\s\|$/   contains=velocityIdentifier,velocityString,velocityNumber
+syn region velocitySilentReference         start=/\$\!/   skip=/(\s*\|\s*,\s*\|\s*)/   end=/\s\|$/   contains=velocityIdentifier,velocityString,velocityNumber
+syn region velocityFormalReference         start=/\${/                                 end=/}/       contains=velocityIdentifier,velocityString,velocityNumber
+syn region velocitySilentFormalReference   start=/\$\!{/                               end=/}/       contains=velocityIdentifier,velocityString,velocityNumber
 
 " keywords:
 syn keyword velocityKeyWord contained set if else elseif end foreach include parse stop macro
 
 " literals (numbers and strings):
 syn match velocityNumber "[0-9][0-9]*\(\.[0-9][0-9]*\)\?" contained
-syn region velocityString	contained start=+"+ skip=+\\\\\|\\"+ end=+"+ oneline
+syn region velocityString contained start=+"+ skip=+\\\\\|\\"+ end=+"+ oneline
 
-" highlighting the inicial sharp (#) of each directive:
+" highlighting the initial sharp (#) of each directive:
 syn match velocityInitialSharp "#" contained
 
-syn match velocityDirective "^\s*#[^#].*" contains=velocityString,velocityReference,velocityFormalReference,velocityKeyWord,velocityNumber,velocityInitialSharp,velocityString,velocityLineComment,velocityMultilineComment
+syn match velocityDirective "^\s*#[^#].*" contains=velocityString,velocityReference,velocitySilentReference,velocityFormalReference,velocitySilentFormalReference,velocityKeyWord,velocityNumber,velocityInitialSharp,velocityString,velocityLineComment,velocityMultilineComment
 
 " velocity comments:
-syn region	velocityMultilineComment start=/#\*/ end=/\*#/ contains=velocityTodo
-syn match	velocityLineComment	"##.*$" contains=velocityTodo
+syn region velocityMultilineComment start=/#\*/ end=/\*#/ contains=velocityTodo
+syn match velocityLineComment "##.*$" contains=velocityTodo
 
 
 " Define the default highlighting.
@@ -82,4 +80,4 @@ endif
 
 let b:current_syntax = "velocity"
 
-" vim: ts=8 sw=2
+" vim: ts=2 sw=2
